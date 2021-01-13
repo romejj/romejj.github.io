@@ -38,7 +38,9 @@ Caveats:
 Now, let us take a look at some sample PDF statements. In this project I shall only focus on statements from DBS (The Development Bank of Singapore Limited) and UOB (United Overseas Bank) because well, I only hold accounts in those banks! Fortunately, this can be generalized to other bank statements as the fundamental concepts are essentially the same. 
 
 ***First page of DBS:***
-![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/DBS_statement_ex2.png)
+<div style="width:80%; margin:0 auto;" align="center" markdown="1">
+    ![image](screenshots/expense_analysis/DBS_statement_ex2.png){:.circle.shadow}
+</div>
 
 ***Second page of DBS:***
 ![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/DBS_statement_ex3.png)
