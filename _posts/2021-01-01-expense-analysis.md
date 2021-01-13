@@ -90,27 +90,27 @@ I will obtain the following:
 
 So far so good! With just a few blocks of code we have managed to store transactions in a string. However, we want to accomplish more here. As we can see, the transactions are still not very clean, and we should also compartmentalize each transaction according to dates, transaction description, and transactional amount so we can then easily write them into a spreadsheet later. Storing the transactions as a list will help accomplish this. We first examine whitespace characters within the string to see how we can split the string accordingly:
 
-{% highlight ruby %}
+```python
 print(repr(first_page_txns_raw))
-{% endhighlight %}
+```
 
 ![print(repr(first_page_txns_raw))](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/print(repr(first_page_txns_raw)).png)
 
 Nice! It looks like the transactions can be neatly split by the newline character, returning a list with each element representing a single transaction. Each element can then be further separated to dates, description and amount by spaces. The result is a list within a list.
 
-{% highlight ruby %}
+```python
 def filter_legitimate_txns(txns):
     txns_split = txns.split("\n")
     txns_double_split = [txn.split() for txn in txns_split]
 
 pprint.pprint(filter_legitimate_txns(first_page_txns_raw))
-{% endhighlight %}
+```
 
 ![list_split](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/list_split.png)
 
 The last step involves cleaning up the transactions in the list. Since each transaction is defined by its dates, description, and amount, we tweak the *filter_legitimate_txns* function to remove any element with a length of less than 4.
 
-{% highlight ruby %}
+```python
 def filter_legitimate_txns(txns):
     txns_split = txns.split("\n")
     txns_double_split = [txn.split() for txn in txns_split]
@@ -118,25 +118,25 @@ def filter_legitimate_txns(txns):
     return [txn for txn in txns_double_split if len(txn) >= 4]
 
 pprint.pprint(filter_legitimate_txns(first_page_txns_raw))
-{% endhighlight %}
+```
 
 ![DBS_clean_fp_txns](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/DBS_clean_fp_txns.png)
 
 The process is almost the same for UOB's sample statement as it's fairly similar to DBS's, apart from three major differences. Firstly, the fixed headers and footers are different, so we will need another set of code to pull transactions from the first page of UOB's statements:
 
-{% highlight ruby %}
+```python
 with pdfplumber.open(uob_source_dir / uob_pdf_file) as pdf:
     first_page = pdf.pages[0]
     first_page_text = first_page.extract_text()
     first_page_txns_raw = first_page_text.partition("PREVIOUS BALANCE")[2].partition("Pleasenote")[0]
     print(first_page_txns_raw)
-{% endhighlight %}
+```
 
 ![parsed_UOB_fp](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/parsed_UOB_fp.png)
 
 Secondly, each transaction is tagged to a unique reference number and that number appears directly below the associated transaction. We are not interested in capturing these reference numbers as they serve no purpose, so we will further edit the *filter_legitimate_txns* function to accommodate for this.
 
-{% highlight ruby %}
+```python
 def filter_legitimate_txns(txns):
     txns_split = txns.split("\n")
     txns_split_no_ref = [txn for txn in txns_split if "Ref No." not in txn] 
@@ -145,25 +145,25 @@ def filter_legitimate_txns(txns):
     return [txn for txn in txns_double_split if len(txn) >= 4]
 
 pprint.pprint(filter_legitimate_txns(first_page_txns_raw))
-{% endhighlight %}
+```
 
 ![UOB_clean_fp_txns](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/UOB_clean_fp_txns.png)
 
 Last but not least, UOB posts each transaction in two dates; one being the post date and the other being the transacted date. The post dates will be removed as we're only concerned with the latter.
 
-{% highlight ruby %}
+```python
 first_page_txns_processed = filter_legitimate_txns(first_page_txns_raw)
 for txn in first_page_txns_processed:
     del txn[0:2]
 
 pprint.pprint(first_page_txns_processed)
-{% endhighlight %}
+```
 
 ![UOB_processed_fp_txns](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/UOB_processed_fp_txns.png)
 
 So far we've managed to successfully extract all clean transactions from each bank statement's first page. However, these transactions can extend to the next if one decides to be more generous and splurge more on a given month! Therefore, we need to expand on our code base to ensure complete transaction extraction from all pages. In both banks, any list of transactions ends with either "SUB-TOTAL" (in DBS) or "SUB TOTAL" (in UOB), so we first define a function that returns True if a page contains these and False otherwise. We shall also store the returned matched words so we can partition the transactions in *txn_trimming* function (so far we've already partitioned the transactions in the first page of each statement, and we're generalizing this operation in this function where it aims to partition transactions in all pages).
 
-{% highlight ruby %}
+```python
 sub_total_regex = re.compile("SUB.TOTAL")
 
 def contains_sub_total(page):
@@ -172,9 +172,9 @@ def contains_sub_total(page):
         
     else:
         return False, None
-{% endhighlight %}
+```
 
-{% highlight ruby %}
+```python
 def txn_trimming(page_text, s):
     txns_raw = page_text.partition(s)[2]
     
@@ -185,11 +185,11 @@ def txn_trimming(page_text, s):
         
     else:
         return txns_raw.partition("Pleasenote")[0]
-{% endhighlight %}
+```
 
 With these functions we are now able to easily extract and process every transaction in all statements. However, there's a final step that we can implement to make our lives easier when we analyze the amounts later. If you look closely at the extracted transactions you would notice that some amounts are suffixed with the letters "CR". These relate to cash rebates given out by the banks because of several reasons like store refunds or monthly credit card rebates. We want the transactional amounts to only store floating-point numbers, so we need to remove the CR while adding a negative sign in front to signify a decrease in expense (instead of an increase). The following function can do this easily:
 
-{% highlight ruby %}
+```python
 def process_txn_amt(txns):
     for txn in txns:
         while not txn[-1].replace(".","",1).replace(",","",1).isdigit() and not "CR" in txn[-1]:  
@@ -200,11 +200,11 @@ def process_txn_amt(txns):
             txn[-1] = "-" + txn[-1]
             
     return txns
-{% endhighlight %}
+```
 
 My source directory contains the entire 2020 statements from both DBS and UOB. Putting all the pieces together, running the above codes on all the files will give all 2020 transactions:
 
-{% highlight ruby %}
+```python
 dbs_all_txns = []
 uob_all_txns = []
 
@@ -251,7 +251,7 @@ categorized_txns = [{"Date": " ".join(txn[0:2]), "Txn Desc": " ".join(txn[2:len(
                         for monthly_txns in all_txns 
                         for txn in monthly_txns]
 
-{% endhighlight %}
+```
 
 ![categorized_txns](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/categorized_txns.png)
 
@@ -260,7 +260,7 @@ The above transactions are first converted into a pandas dataframe to allow for 
 
 Adding cateogories to each transaction then requires the following code:
 
-{% highlight ruby %}
+```python
 # Load into dataframe for further manipulation
 df_categorized_txns = pd.DataFrame(categorized_txns)
 
@@ -313,14 +313,14 @@ def categorize_txns(s):
         return "Food"
 
 df_categorized_txns["Category"] = df_categorized_txns.apply(categorize_txns, axis=1)
-{% endhighlight %}
+```
 
 This part is rather tedious; it requires one to study the underlying data and understand which merchants one tends to gravitate to fulfill most of the purchases in each category. For example, I know that I mainly shop from ecommerce channels such as Lazada and Shopee so those are used in the regex functions. In addition, I've allocated budget for my partner's birthday so the above attempts to classify all 27 Jun transactions as expenses incurred for her birthday.
 
 Lastly, the dataframe is written into a csv file to prepare for analysis:
-{% highlight ruby %}
+```python
 df_categorized_txns.to_csv(dest_csv / "2020 transactions.csv")
-{% endhighlight %}
+```
 ## Analyze Expenses
 We finally have a clean dataset to analyze the expenses. The resulting csv file is uploaded in Tableau Public to generate the dashboard [here](https://public.tableau.com/profile/jerome.ko#!/vizhome/2020ExpenseAnalysis/Dashboard1?publish=yes). Multiple conclusions can be made from this set of data.
 
