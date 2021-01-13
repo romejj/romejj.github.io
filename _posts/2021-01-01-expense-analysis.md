@@ -38,16 +38,16 @@ Caveats:
 Now, let us take a look at some sample PDF statements. In this project I shall only focus on statements from DBS (The Development Bank of Singapore Limited) and UOB (United Overseas Bank) because well, I only hold accounts in those banks! Fortunately, this can be generalized to other bank statements as the fundamental concepts are essentially the same. 
 
 ***First page of DBS:***
-![DBS_statement_ex2](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/DBS_statement_ex2.png)
+![DBS_statement_ex2](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/DBS_statement_ex2_r.png)
 
 ***Second page of DBS:***
-![DBS_statement_ex3](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/DBS_statement_ex3.png)
+![DBS_statement_ex3](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/DBS_statement_ex3_r.png)
 
 ***First page of UOB:***
-![UOB_statement_ex1](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/UOB_statement_ex1.png)
+![UOB_statement_ex1](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/UOB_statement_ex1_r.png)
 
 ***Second page of UOB:***
-![UOB_statement_ex2](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/UOB_statement_ex2.png)
+![UOB_statement_ex2](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/UOB_statement_ex2_r.png)
 
 Subsequent pages are irrelevant in this case, as all my transactions are kept within the first two pages of each bank's statement. From examining the statements above we can deduce that transactions are always wrapped between fixed headers and footers:
 
