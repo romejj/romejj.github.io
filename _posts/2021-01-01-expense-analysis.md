@@ -120,9 +120,7 @@ def filter_legitimate_txns(txns):
 pprint.pprint(filter_legitimate_txns(first_page_txns_raw))
 ```
 
-<!-- ![DBS_clean_fp_txns](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/DBS_clean_fp_txns.png) -->
-
-<img src="https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/DBS_clean_fp_txns.png" alt="DBS_clean_fp_txns" height="50%"/>
+![DBS_clean_fp_txns](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/DBS_clean_fp_txns.png)
 
 The process is almost the same for UOB's sample statement as it's fairly similar to DBS's, apart from three major differences. Firstly, the fixed headers and footers are different, so we will need another set of code to pull transactions from the first page of UOB's statements:
 
