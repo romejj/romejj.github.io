@@ -78,13 +78,14 @@ We need to find a suitable library that is able to read PDF pages and store them
 
 Remember when I mentioned in the previous section about taking note of the fixed headers and footers? It comes in handy here; when I parse the first page of the sample DBS statement and then only take whatever that comes after the fixed header,
 
-{% highlight ruby %}
+```python
 with pdfplumber.open(dbs_source_dir / dbs_pdf_file) as pdf:
     first_page = pdf.pages[0]
     first_page_text = first_page.extract_text()
     first_page_txns_raw = first_page_text.partition("NEW TRANSACTIONS JEROME KO JIA JIN")[2]
     print(first_page_txns_raw)
 {% endhighlight %}
+```
 
 I will obtain the following:
 
