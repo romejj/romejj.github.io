@@ -38,18 +38,16 @@ Caveats:
 Now, let us take a look at some sample PDF statements. In this project I shall only focus on statements from DBS (The Development Bank of Singapore Limited) and UOB (United Overseas Bank) because well, I only hold accounts in those banks! Fortunately, this can be generalized to other bank statements as the fundamental concepts are essentially the same. 
 
 ***First page of DBS:***
-<div style="width:80%; margin:0 auto;" align="center" markdown="1">
-    ![image](screenshots/expense_analysis/DBS_statement_ex2.png){:.circle.shadow}
-</div>
+![DBS_statement_ex2](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/DBS_statement_ex2.png)
 
 ***Second page of DBS:***
-![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/DBS_statement_ex3.png)
+![DBS_statement_ex3](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/DBS_statement_ex3.png)
 
 ***First page of UOB:***
-![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/UOB_statement_ex1.png)
+![UOB_statement_ex1](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/UOB_statement_ex1.png)
 
 ***Second page of UOB:***
-![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/UOB_statement_ex2.png)
+![UOB_statement_ex2](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/UOB_statement_ex2.png)
 
 Subsequent pages are irrelevant in this case, as all my transactions are kept within the first two pages of each bank's statement. From examining the statements above we can deduce that transactions are always wrapped between fixed headers and footers:
 
@@ -84,12 +82,11 @@ with pdfplumber.open(dbs_source_dir / dbs_pdf_file) as pdf:
     first_page_text = first_page.extract_text()
     first_page_txns_raw = first_page_text.partition("NEW TRANSACTIONS JEROME KO JIA JIN")[2]
     print(first_page_txns_raw)
-{% endhighlight %}
 ```
 
 I will obtain the following:
 
-![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/parsed_DBS_fp.png)
+![parsed_DBS_fp](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/parsed_DBS_fp.png)
 
 So far so good! With just a few blocks of code we have managed to store transactions in a string. However, we want to accomplish more here. As we can see, the transactions are still not very clean, and we should also compartmentalize each transaction according to dates, transaction description, and transactional amount so we can then easily write them into a spreadsheet later. Storing the transactions as a list will help accomplish this. We first examine whitespace characters within the string to see how we can split the string accordingly:
 
@@ -97,7 +94,7 @@ So far so good! With just a few blocks of code we have managed to store transact
 print(repr(first_page_txns_raw))
 {% endhighlight %}
 
-![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/print(repr(first_page_txns_raw)).png)
+![print(repr(first_page_txns_raw))](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/print(repr(first_page_txns_raw)).png)
 
 Nice! It looks like the transactions can be neatly split by the newline character, returning a list with each element representing a single transaction. Each element can then be further separated to dates, description and amount by spaces. The result is a list within a list.
 
@@ -109,7 +106,7 @@ def filter_legitimate_txns(txns):
 pprint.pprint(filter_legitimate_txns(first_page_txns_raw))
 {% endhighlight %}
 
-![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/list_split.png)
+![list_split](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/list_split.png)
 
 The last step involves cleaning up the transactions in the list. Since each transaction is defined by its dates, description, and amount, we tweak the *filter_legitimate_txns* function to remove any element with a length of less than 4.
 
@@ -123,7 +120,7 @@ def filter_legitimate_txns(txns):
 pprint.pprint(filter_legitimate_txns(first_page_txns_raw))
 {% endhighlight %}
 
-![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/DBS_clean_fp_txns.png)
+![DBS_clean_fp_txns](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/DBS_clean_fp_txns.png)
 
 The process is almost the same for UOB's sample statement as it's fairly similar to DBS's, apart from three major differences. Firstly, the fixed headers and footers are different, so we will need another set of code to pull transactions from the first page of UOB's statements:
 
@@ -135,7 +132,7 @@ with pdfplumber.open(uob_source_dir / uob_pdf_file) as pdf:
     print(first_page_txns_raw)
 {% endhighlight %}
 
-![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/parsed_UOB_fp.png)
+![parsed_UOB_fp](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/parsed_UOB_fp.png)
 
 Secondly, each transaction is tagged to a unique reference number and that number appears directly below the associated transaction. We are not interested in capturing these reference numbers as they serve no purpose, so we will further edit the *filter_legitimate_txns* function to accommodate for this.
 
@@ -150,7 +147,7 @@ def filter_legitimate_txns(txns):
 pprint.pprint(filter_legitimate_txns(first_page_txns_raw))
 {% endhighlight %}
 
-![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/UOB_clean_fp_txns.png)
+![UOB_clean_fp_txns](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/UOB_clean_fp_txns.png)
 
 Last but not least, UOB posts each transaction in two dates; one being the post date and the other being the transacted date. The post dates will be removed as we're only concerned with the latter.
 
@@ -162,7 +159,7 @@ for txn in first_page_txns_processed:
 pprint.pprint(first_page_txns_processed)
 {% endhighlight %}
 
-![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/UOB_processed_fp_txns.png)
+![UOB_processed_fp_txns](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/UOB_processed_fp_txns.png)
 
 So far we've managed to successfully extract all clean transactions from each bank statement's first page. However, these transactions can extend to the next if one decides to be more generous and splurge more on a given month! Therefore, we need to expand on our code base to ensure complete transaction extraction from all pages. In both banks, any list of transactions ends with either "SUB-TOTAL" (in DBS) or "SUB TOTAL" (in UOB), so we first define a function that returns True if a page contains these and False otherwise. We shall also store the returned matched words so we can partition the transactions in *txn_trimming* function (so far we've already partitioned the transactions in the first page of each statement, and we're generalizing this operation in this function where it aims to partition transactions in all pages).
 
@@ -256,7 +253,7 @@ categorized_txns = [{"Date": " ".join(txn[0:2]), "Txn Desc": " ".join(txn[2:len(
 
 {% endhighlight %}
 
-![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/categorized_txns.png)
+![categorized_txns](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/categorized_txns.png)
 
 ## Write Into .csv
 The above transactions are first converted into a pandas dataframe to allow for easier manipulation to the data and subsequent writing into a csv file.
@@ -327,7 +324,7 @@ df_categorized_txns.to_csv(dest_csv / "2020 transactions.csv")
 ## Analyze Expenses
 We finally have a clean dataset to analyze the expenses. The resulting csv file is uploaded in Tableau Public to generate the dashboard [here](https://public.tableau.com/profile/jerome.ko#!/vizhome/2020ExpenseAnalysis/Dashboard1?publish=yes). Multiple conclusions can be made from this set of data.
 
-![_config.yml]({{ site.baseurl }}/screenshots/expense_analysis/expense_dashboard.png)
+![expense_dashboard](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/expense_dashboard.png)
 
 A positive balance of $1,872 seems to suggest that 2020 is a rather frugal year for me, as I'd successfully managed to keep my expenses well below my budget. However, drawing such conclusions from a simple numerical measure can prove to be erroneous as spending might be highly concentrated on just a few categories such that the allocated budgets for other categories lessen the negative balances in these dominant ones. This phenomenon is apparent in this dashboard; up to an astonishing 90% of all expenses was spent on just food and shopping. This means that any fluctuation in just these 2 categories will lead to large swings in the overall health of the balance sheet, highlighting the importance of controlling the amount spent on these key cateogories to avoid being in the red.
 
