@@ -326,6 +326,8 @@ We finally have a clean dataset to analyze the expenses. The resulting csv file 
 
 ![expense_dashboard](https://raw.githubusercontent.com/romejj/romejj.github.io/master/screenshots/expense_analysis/expense_dashboard.png)
 
+<center><iframe src="https://public.tableau.com/views/2020ExpenseAnalysis/Dashboard1?:language=en&:display_count=y&:origin=viz_share_link" width="100%" height="1627" frameborder="0"></iframe></center>
+
 A positive balance of $1,872 seems to suggest that 2020 is a rather frugal year for me, as I'd successfully managed to keep my expenses well below my budget. However, drawing such conclusions from a simple numerical measure can prove to be erroneous as spending might be highly concentrated on just a few categories such that the allocated budgets for other categories lessen the negative balances in these dominant ones. This phenomenon is apparent in this dashboard; up to an astonishing 90% of all expenses was spent on just food and shopping. This means that any fluctuation in just these 2 categories will lead to large swings in the overall health of the balance sheet, highlighting the importance of controlling the amount spent on these key cateogories to avoid being in the red.
 
 If we look at how well each category spending fares in comparison to its corresponding budget, it is the same 2 categories that performed the worse. Spending on food is at 108% of its allocated budget, while shopping expense has exceeded the budget by 8 times! The purchase of a new laptop (MacBook Pro, which costs $1,884) explains the poor performance in the latter though (covering 40% of all shopping expenses), and performance here is rather subjective as the laptop purchase was a necessary evil because it is meant to be used for educational purposes.
