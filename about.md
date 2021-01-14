@@ -30,23 +30,7 @@ A business data analyst in OCBC by day, and an avid self learner by night. Harne
 
 ## Qualifications
 <!-- Try to embed pdf here -->
-<iframe src="https://drive.google.com/file/d/14bVE843aDMQRXH_LdwbJqBohIF1Yslsb/preview" width="740" height="580"></iframe>
+<iframe src="https://drive.google.com/file/d/14bVE843aDMQRXH_LdwbJqBohIF1Yslsb/preview" width="860" height="700"></iframe>
 
-- Responsive
-- Semantic HTML
-- Skins
-- Highlight Theme
-- Internationalization
-- Search
-- Table of contents
-- Authors
-- Additional styles (alert, tag, image, icon, button, grid, etc)
-- Extensions (audios, videos, slides, demos)
-- Markdown enhancements ([MathJax](https://www.mathjax.org/), [mermaid](https://mermaidjs.github.io/), [chartjs](http://www.chartjs.org/))
-- Sharing ([AddToAny](https://www.addtoany.com/), [AddThis](https://www.addthis.com/))
-- Comments ([Disqus](https://disqus.com/), [Gitalk](https://gitalk.github.io/), [Valine](https://valine.js.org/en/))
-- Pageview ([LeanCloud](https://leancloud.cn/))
-- Analytics ([Google Analytics](https://analytics.google.com/analytics/web/))
-- RSS ([jekyll-feed](https://github.com/jekyll/jekyll-feed))
-
-## Skins
+## Contact Me
+Feel free to contact me by clicking on any of the icons in the footer below! :bowtie:
