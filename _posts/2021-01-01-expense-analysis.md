@@ -1,7 +1,6 @@
 ---
 layout: article
 title: Expense Analysis
-cover: /docs/assets/images/axure/page-article-header-overlay-background-image-header-background.jpg
 header:
   theme: dark
   background: 'linear-gradient(135deg, rgb(34, 139, 87), rgb(139, 34, 139))'
