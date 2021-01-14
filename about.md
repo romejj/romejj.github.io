@@ -30,7 +30,7 @@ A business data analyst in OCBC by day, and an avid self learner by night. Harne
 
 ## Qualifications
 <!-- Try to embed pdf here -->
-<iframe src="https://drive.google.com/file/d/14bVE843aDMQRXH_LdwbJqBohIF1Yslsb/preview" width="640" height="480"></iframe>
+<iframe src="https://drive.google.com/file/d/14bVE843aDMQRXH_LdwbJqBohIF1Yslsb/preview" width="740" height="580"></iframe>
 
 - Responsive
 - Semantic HTML
